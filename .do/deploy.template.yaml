@@ -1,0 +1,15 @@
+spec:
+  name: webhook-digitalocean-example
+  services:
+    - name: webhook-application
+      git:
+        repo_clone_url: https://github.com/koocbor/do-webhook-test.git
+        branch: main
+      dockerfile_path: Dockerfile
+  databases:
+    - name: mongo-database
+      engine: mongodb
+      size: db-s-1vcpu-1gb
+      node_count: 1
+      db_version: 4.4
+      production: false
