@@ -1,0 +1,8 @@
+spec:
+  name: webhook-digitalocean-example
+  services:
+    - name: webhook-application
+      git:
+        repo_clone_url: https://github.com/koocbor/do-webhook-test.git
+        branch: main
+      dockerfile_path: Dockerfile

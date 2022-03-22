@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  mongo-db:
+    image: mongo
+    container_name: 'webhook-test-mongo'
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodb:/data/db
+    networks: 
+      - webhooktestnet
+
+  webhook-app:
+    build:
+      context: .
+    container_name: 'webhook-test-app'
+    restart: unless-stopped
+    user: 'node'
+    depends_on:
+      - mongo-db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules # anonymous volume to detach local node_modules from container
+    networks:
+      - webhooktestnet
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+
+networks:
+  webhooktestnet:
+
+volumes:
+  mongodb:
